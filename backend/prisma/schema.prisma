@@ -1,0 +1,219 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// מודל משתמש בסיסי
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  phone     String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // קשרים
+  role            UserRole
+  permissions     UserPermission[]
+  createdBy       User?           @relation("UserCreatedBy", fields: [createdById], references: [id])
+  createdById     String?
+  createdUsers    User[]          @relation("UserCreatedBy")
+  clientRides     Ride[]          @relation("ClientRides")
+  driverRides     Ride[]          @relation("DriverRides")
+  createdRides    Ride[]          @relation("CreatedRides")
+  notifications   Notification[]
+  auditLogs       AuditLog[]
+  refreshTokens   RefreshToken[]
+
+  @@map("users")
+}
+
+// תפקידי משתמש
+enum UserRole {
+  SUPER_ADMIN
+  SUB_ADMIN
+  ADMIN
+  DRIVER
+  INSTITUTIONAL_CLIENT
+}
+
+// הרשאות במערכת
+model Permission {
+  id          String @id @default(cuid())
+  name        String @unique
+  description String
+  resource    String // לדוגמה: "rides", "users", "reports"
+  action      String // לדוגמה: "create", "read", "update", "delete", "export"
+
+  // קשרים
+  userPermissions UserPermission[]
+
+  @@map("permissions")
+}
+
+// הרשאות משתמש (רב-רב)
+model UserPermission {
+  id           String @id @default(cuid())
+  userId       String
+  permissionId String
+  granted      Boolean @default(true)
+  grantedBy    String? // מי נתן את ההרשאה
+  grantedAt    DateTime @default(now())
+
+  // קשרים
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, permissionId])
+  @@map("user_permissions")
+}
+
+// נסיעות
+model Ride {
+  id              String      @id @default(cuid())
+  task            String      // שדה "משימה" חדש
+  pickupAddress   String
+  dropoffAddress  String
+  scheduledDate   DateTime
+  estimatedFare   Float?
+  invoiceNumber   String?
+  notes           String?     // הערות כלליות
+  patientDetails  String?     // פרטי חולה (מוצפן)
+  status          RideStatus  @default(PENDING)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // קשרים
+  clientId    String?
+  client      User?   @relation("ClientRides", fields: [clientId], references: [id])
+  driverId    String?
+  driver      User?   @relation("DriverRides", fields: [driverId], references: [id])
+  createdById String
+  createdBy   User    @relation("CreatedRides", fields: [createdById], references: [id])
+  
+  // היסטוריית סטטוס
+  statusHistory RideStatusHistory[]
+  notifications Notification[]
+
+  @@map("rides")
+}
+
+// סטטוסי נסיעה
+enum RideStatus {
+  PENDING           // ממתין לאישור
+  ASSIGNED          // הוקצה לנהג
+  ACCEPTED          // נהג קיבל
+  ON_THE_WAY        // בדרך
+  COMPLETED         // הושלם
+  CANCELLED         // בוטל
+  DECLINED_BY_DRIVER // נהג דחה
+}
+
+// היסטוריית סטטוס נסיעה
+model RideStatusHistory {
+  id        String    @id @default(cuid())
+  rideId    String
+  status    RideStatus
+  timestamp DateTime  @default(now())
+  notes     String?
+  changedBy String?   // מי שינה את הסטטוס
+
+  // קשרים
+  ride Ride @relation(fields: [rideId], references: [id], onDelete: Cascade)
+
+  @@map("ride_status_history")
+}
+
+// התראות
+model Notification {
+  id        String             @id @default(cuid())
+  title     String
+  message   String
+  type      NotificationType
+  isRead    Boolean            @default(false)
+  createdAt DateTime           @default(now())
+
+  // קשרים
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rideId String?
+  ride   Ride?  @relation(fields: [rideId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+// סוגי התראות
+enum NotificationType {
+  RIDE_ASSIGNED
+  RIDE_ACCEPTED
+  RIDE_DECLINED
+  RIDE_COMPLETED
+  RIDE_CANCELLED
+  DRIVER_DECLINED
+  SYSTEM_ALERT
+}
+
+// יומן ביקורת
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String   // הפעולה שבוצעה
+  resource  String   // המשאב שעליו בוצעה הפעולה
+  resourceId String? // מזהה המשאב
+  details   Json?    // פרטים נוספים
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  // קשרים
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("audit_logs")
+}
+
+// טוקני רענון
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  // קשרים
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+// הגדרות מערכת
+model SystemSettings {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+  type  String @default("string") // string, number, boolean, json
+
+  @@map("system_settings")
+}
+
+// ייצוא ל-Google Sheets
+model GoogleSheetsExport {
+  id             String   @id @default(cuid())
+  spreadsheetId  String
+  sheetName      String   // שם הגיליון (YYYY-MM)
+  exportedAt     DateTime @default(now())
+  exportedBy     String
+  rideIds        String[] // מזהה הנסיעות שיוצאו
+  status         String   @default("completed") // completed, failed, partial
+
+  @@map("google_sheets_exports")
+}

@@ -1,0 +1,1341 @@
+openapi: 3.0.3
+info:
+  title: Ambulance Manager API
+  description: |
+    API מתקדמת לניהול חברת אמבולנסים פרטית
+    
+    תכונות עיקריות:
+    - ניהול משתמשים עם הרשאות גמישות
+    - ניהול נסיעות עם מחזור חיים מלא
+    - אינטגרציה עם Google Sheets
+    - התראות בזמן אמת
+    - אבטחה מתקדמת עם JWT
+  version: 1.0.0
+  contact:
+    name: Ambulance Manager Support
+    email: support@ambulance-manager.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:3001/api
+    description: Development server
+  - url: https://your-domain.com/api
+    description: Production server
+
+tags:
+  - name: Authentication
+    description: ניהול אימות והרשאות
+  - name: Users
+    description: ניהול משתמשים
+  - name: Rides
+    description: ניהול נסיעות
+  - name: Google Sheets
+    description: אינטגרציה עם Google Sheets
+  - name: Notifications
+    description: מערכת התראות
+  - name: System
+    description: הגדרות מערכת
+
+paths:
+  # Authentication Endpoints
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: התחברות למערכת
+      description: התחברות למערכת עם אימייל וסיסמה
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "driver@example.com"
+                  description: "כתובת אימייל"
+                password:
+                  type: string
+                  minLength: 6
+                  example: "password123"
+                  description: "סיסמה"
+      responses:
+        '200':
+          description: התחברות הצליחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/User'
+                      accessToken:
+                        type: string
+                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                      refreshToken:
+                        type: string
+                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  message:
+                    type: string
+                    example: "התחברות הצליחה"
+        '401':
+          description: פרטי התחברות לא תקינים
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: רישום משתמש חדש
+      description: יצירת משתמש חדש במערכת
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - firstName
+                - lastName
+                - role
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "newuser@example.com"
+                password:
+                  type: string
+                  minLength: 6
+                  example: "password123"
+                firstName:
+                  type: string
+                  example: "יוחנן"
+                lastName:
+                  type: string
+                  example: "כהן"
+                role:
+                  type: string
+                  enum: [SUPER_ADMIN, SUB_ADMIN, ADMIN, DRIVER, INSTITUTIONAL_CLIENT]
+                  example: "DRIVER"
+                isActive:
+                  type: boolean
+                  default: true
+      responses:
+        '201':
+          description: משתמש נוצר בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/User'
+                      accessToken:
+                        type: string
+                  message:
+                    type: string
+                    example: "משתמש נוצר בהצלחה"
+        '400':
+          description: שגיאה בנתונים
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: רענון אסימון
+      description: רענון access token באמצעות refresh token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refreshToken
+              properties:
+                refreshToken:
+                  type: string
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      responses:
+        '200':
+          description: אסימון רוענן בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                      refreshToken:
+                        type: string
+                  message:
+                    type: string
+                    example: "אסימון רוענן בהצלחה"
+
+  /auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: התנתקות
+      description: התנתקות מהמערכת ומחיקת refresh token
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refreshToken
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        '200':
+          description: התנתקות הצליחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "התנתקות הושלמה"
+
+  # Users Endpoints
+  /users:
+    get:
+      tags:
+        - Users
+      summary: קבלת רשימת משתמשים
+      description: קבלת רשימת כל המשתמשים עם פילטרים
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: מספר עמוד
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: כמות פריטים בעמוד
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+        - name: role
+          in: query
+          description: סינון לפי תפקיד
+          schema:
+            type: string
+            enum: [SUPER_ADMIN, SUB_ADMIN, ADMIN, DRIVER, INSTITUTIONAL_CLIENT]
+        - name: search
+          in: query
+          description: חיפוש לפי שם או אימייל
+          schema:
+            type: string
+      responses:
+        '200':
+          description: רשימת משתמשים
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      users:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/User'
+                      total:
+                        type: integer
+                        example: 25
+                      page:
+                        type: integer
+                        example: 1
+                      limit:
+                        type: integer
+                        example: 10
+
+    post:
+      tags:
+        - Users
+      summary: יצירת משתמש חדש
+      description: יצירת משתמש חדש במערכת
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: משתמש נוצר בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/User'
+                  message:
+                    type: string
+                    example: "משתמש נוצר בהצלחה"
+
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: קבלת משתמש לפי ID
+      description: קבלת פרטי משתמש ספציפי
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: מזהה משתמש
+          schema:
+            type: string
+      responses:
+        '200':
+          description: פרטי משתמש
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/User'
+        '404':
+          description: משתמש לא נמצא
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - Users
+      summary: עדכון משתמש
+      description: עדכון פרטי משתמש קיים
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: מזהה משתמש
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: משתמש עודכן בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/User'
+                  message:
+                    type: string
+                    example: "משתמש עודכן בהצלחה"
+
+    delete:
+      tags:
+        - Users
+      summary: מחיקת משתמש
+      description: מחיקת משתמש מהמערכת
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: מזהה משתמש
+          schema:
+            type: string
+      responses:
+        '200':
+          description: משתמש נמחק בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "משתמש נמחק בהצלחה"
+
+  # Rides Endpoints
+  /rides:
+    get:
+      tags:
+        - Rides
+      summary: קבלת רשימת נסיעות
+      description: קבלת רשימת כל הנסיעות עם פילטרים
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: מספר עמוד
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: כמות פריטים בעמוד
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+        - name: status
+          in: query
+          description: סינון לפי סטטוס
+          schema:
+            type: string
+            enum: [PENDING, ASSIGNED, ACCEPTED_BY_DRIVER, ON_THE_WAY, COMPLETED, CANCELED]
+        - name: driverId
+          in: query
+          description: סינון לפי נהג
+          schema:
+            type: string
+        - name: clientId
+          in: query
+          description: סינון לפי לקוח
+          schema:
+            type: string
+        - name: dateFrom
+          in: query
+          description: תאריך התחלה
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          description: תאריך סיום
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: רשימת נסיעות
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      rides:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Ride'
+                      total:
+                        type: integer
+                        example: 50
+                      page:
+                        type: integer
+                        example: 1
+                      limit:
+                        type: integer
+                        example: 10
+
+    post:
+      tags:
+        - Rides
+      summary: יצירת נסיעה חדשה
+      description: יצירת נסיעה חדשה במערכת
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRideRequest'
+      responses:
+        '201':
+          description: נסיעה נוצרה בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Ride'
+                  message:
+                    type: string
+                    example: "נסיעה נוצרה בהצלחה"
+
+  /rides/{id}:
+    get:
+      tags:
+        - Rides
+      summary: קבלת נסיעה לפי ID
+      description: קבלת פרטי נסיעה ספציפית
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: מזהה נסיעה
+          schema:
+            type: string
+      responses:
+        '200':
+          description: פרטי נסיעה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Ride'
+        '404':
+          description: נסיעה לא נמצאה
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - Rides
+      summary: עדכון נסיעה
+      description: עדכון פרטי נסיעה קיימת
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: מזהה נסיעה
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRideRequest'
+      responses:
+        '200':
+          description: נסיעה עודכנה בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Ride'
+                  message:
+                    type: string
+                    example: "נסיעה עודכנה בהצלחה"
+
+    delete:
+      tags:
+        - Rides
+      summary: מחיקת נסיעה
+      description: מחיקת נסיעה מהמערכת
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: מזהה נסיעה
+          schema:
+            type: string
+      responses:
+        '200':
+          description: נסיעה נמחקה בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "נסיעה נמחקה בהצלחה"
+
+  /rides/{id}/assign-driver:
+    post:
+      tags:
+        - Rides
+      summary: הקצאת נהג לנסיעה
+      description: הקצאת נהג לנסיעה ספציפית
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: מזהה נסיעה
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - driverId
+              properties:
+                driverId:
+                  type: string
+                  example: "driver123"
+                  description: "מזהה נהג"
+      responses:
+        '200':
+          description: נהג הוקצה בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Ride'
+                  message:
+                    type: string
+                    example: "נהג הוקצה בהצלחה"
+
+  /rides/{id}/status:
+    put:
+      tags:
+        - Rides
+      summary: עדכון סטטוס נסיעה
+      description: עדכון סטטוס נסיעה
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: מזהה נסיעה
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+              properties:
+                status:
+                  type: string
+                  enum: [PENDING, ASSIGNED, ACCEPTED_BY_DRIVER, ON_THE_WAY, COMPLETED, CANCELED]
+                  example: "COMPLETED"
+                  description: "סטטוס חדש"
+      responses:
+        '200':
+          description: סטטוס עודכן בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Ride'
+                  message:
+                    type: string
+                    example: "סטטוס עודכן בהצלחה"
+
+  # Google Sheets Endpoints
+  /sheets/export:
+    post:
+      tags:
+        - Google Sheets
+      summary: ייצוא נסיעות ל-Google Sheets
+      description: ייצוא נסיעות ל-Google Sheets עם אפשרויות סינון
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rideIds:
+                  type: array
+                  items:
+                    type: string
+                  description: "מזהי נסיעות ספציפיות"
+                dateFrom:
+                  type: string
+                  format: date
+                  description: "תאריך התחלה"
+                dateTo:
+                  type: string
+                  format: date
+                  description: "תאריך סיום"
+                driverId:
+                  type: string
+                  description: "מזהה נהג"
+                clientId:
+                  type: string
+                  description: "מזהה לקוח"
+                status:
+                  type: string
+                  enum: [PENDING, ASSIGNED, ACCEPTED_BY_DRIVER, ON_THE_WAY, COMPLETED, CANCELED]
+                  description: "סטטוס"
+      responses:
+        '200':
+          description: ייצוא הושלם בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      exportedCount:
+                        type: integer
+                        example: 25
+                      spreadsheetId:
+                        type: string
+                        example: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
+                      sheetName:
+                        type: string
+                        example: "2024-01"
+                  message:
+                    type: string
+                    example: "ייצוא הושלם בהצלחה - 25 נסיעות"
+
+  /sheets/settings:
+    get:
+      tags:
+        - Google Sheets
+      summary: קבלת הגדרות Google Sheets
+      description: קבלת הגדרות Google Sheets הנוכחיות
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: הגדרות Google Sheets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      spreadsheetId:
+                        type: string
+                        example: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
+                      autoSyncEnabled:
+                        type: boolean
+                        example: true
+
+    put:
+      tags:
+        - Google Sheets
+      summary: עדכון הגדרות Google Sheets
+      description: עדכון הגדרות Google Sheets
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                spreadsheetId:
+                  type: string
+                  description: "מזהה Google Sheets"
+                autoSyncEnabled:
+                  type: boolean
+                  description: "הפעלת ייצוא אוטומטי"
+      responses:
+        '200':
+          description: הגדרות עודכנו בהצלחה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "הגדרות Google Sheets עודכנו בהצלחה"
+
+  /sheets/test-connection:
+    get:
+      tags:
+        - Google Sheets
+      summary: בדיקת חיבור ל-Google Sheets
+      description: בדיקת חיבור ל-Google Sheets
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: תוצאת בדיקת החיבור
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      connected:
+                        type: boolean
+                        example: true
+                  message:
+                    type: string
+                    example: "חיבור תקין"
+
+  /sheets/history:
+    get:
+      tags:
+        - Google Sheets
+      summary: היסטוריית ייצוא
+      description: קבלת היסטוריית ייצוא ל-Google Sheets
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          description: כמות רשומות
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+      responses:
+        '200':
+          description: היסטוריית ייצוא
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        spreadsheetId:
+                          type: string
+                        sheetName:
+                          type: string
+                        exportedAt:
+                          type: string
+                          format: date-time
+                        exportedCount:
+                          type: integer
+                        status:
+                          type: string
+                          enum: [completed, failed]
+                        exportedByUser:
+                          type: object
+                          properties:
+                            firstName:
+                              type: string
+                            lastName:
+                              type: string
+                            email:
+                              type: string
+
+  # Notifications Endpoints
+  /notifications/my:
+    get:
+      tags:
+        - Notifications
+      summary: קבלת התראות של המשתמש
+      description: קבלת התראות של המשתמש הנוכחי
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: isRead
+          in: query
+          description: סינון לפי סטטוס קריאה
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          description: כמות התראות
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+        - name: offset
+          in: query
+          description: אופסט
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: רשימת התראות
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Notification'
+
+  /notifications/{id}/read:
+    put:
+      tags:
+        - Notifications
+      summary: סימון התראה כנקראה
+      description: סימון התראה כנקראה
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: מזהה התראה
+          schema:
+            type: string
+      responses:
+        '200':
+          description: התראה סומנה כנקראה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Notification'
+                  message:
+                    type: string
+                    example: "התראה סומנה כנקראה"
+
+  /notifications/read-all:
+    put:
+      tags:
+        - Notifications
+      summary: סימון כל ההתראות כנקראות
+      description: סימון כל ההתראות של המשתמש כנקראות
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: כל ההתראות סומנו כנקראות
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "כל ההתראות סומנו כנקראות"
+
+  # System Endpoints
+  /health:
+    get:
+      tags:
+        - System
+      summary: בדיקת בריאות המערכת
+      description: בדיקת בריאות המערכת
+      responses:
+        '200':
+          description: המערכת תקינה
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  timestamp:
+                    type: string
+                    format: date-time
+                  environment:
+                    type: string
+                    example: "production"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "JWT token for authentication"
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "user123"
+        email:
+          type: string
+          format: email
+          example: "user@example.com"
+        firstName:
+          type: string
+          example: "יוחנן"
+        lastName:
+          type: string
+          example: "כהן"
+        role:
+          type: string
+          enum: [SUPER_ADMIN, SUB_ADMIN, ADMIN, DRIVER, INSTITUTIONAL_CLIENT]
+          example: "DRIVER"
+        isActive:
+          type: boolean
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        permissions:
+          type: array
+          items:
+            type: string
+          example: ["rides.read", "rides.update"]
+
+    CreateUserRequest:
+      type: object
+      required:
+        - email
+        - password
+        - firstName
+        - lastName
+        - role
+      properties:
+        email:
+          type: string
+          format: email
+          example: "newuser@example.com"
+        password:
+          type: string
+          minLength: 6
+          example: "password123"
+        firstName:
+          type: string
+          example: "משה"
+        lastName:
+          type: string
+          example: "לוי"
+        role:
+          type: string
+          enum: [SUPER_ADMIN, SUB_ADMIN, ADMIN, DRIVER, INSTITUTIONAL_CLIENT]
+          example: "DRIVER"
+        isActive:
+          type: boolean
+          default: true
+
+    UpdateUserRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: "משה"
+        lastName:
+          type: string
+          example: "לוי"
+        role:
+          type: string
+          enum: [SUPER_ADMIN, SUB_ADMIN, ADMIN, DRIVER, INSTITUTIONAL_CLIENT]
+        isActive:
+          type: boolean
+
+    Ride:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "ride123"
+        task:
+          type: string
+          example: "נסיעה דחופה"
+        pickupAddress:
+          type: string
+          example: "תל אביב, רחוב הרצל 1"
+        dropoffAddress:
+          type: string
+          example: "ירושלים, רחוב יפו 10"
+        scheduledDate:
+          type: string
+          format: date
+          example: "2024-01-15"
+        scheduledTime:
+          type: string
+          example: "10:00"
+        clientId:
+          type: string
+          example: "client123"
+        driverId:
+          type: string
+          example: "driver123"
+        estimatedFare:
+          type: number
+          example: 150
+        invoiceNumber:
+          type: string
+          example: "INV-001"
+        notes:
+          type: string
+          example: "נסיעה רגילה"
+        status:
+          type: string
+          enum: [PENDING, ASSIGNED, ACCEPTED_BY_DRIVER, ON_THE_WAY, COMPLETED, CANCELED]
+          example: "PENDING"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        driver:
+          $ref: '#/components/schemas/User'
+        client:
+          $ref: '#/components/schemas/User'
+
+    CreateRideRequest:
+      type: object
+      required:
+        - task
+        - pickupAddress
+        - dropoffAddress
+        - scheduledDate
+        - scheduledTime
+      properties:
+        task:
+          type: string
+          example: "נסיעה דחופה"
+        pickupAddress:
+          type: string
+          example: "תל אביב, רחוב הרצל 1"
+        dropoffAddress:
+          type: string
+          example: "ירושלים, רחוב יפו 10"
+        scheduledDate:
+          type: string
+          format: date
+          example: "2024-01-15"
+        scheduledTime:
+          type: string
+          example: "10:00"
+        clientId:
+          type: string
+          example: "client123"
+        driverId:
+          type: string
+          example: "driver123"
+        estimatedFare:
+          type: number
+          example: 150
+        invoiceNumber:
+          type: string
+          example: "INV-001"
+        notes:
+          type: string
+          example: "נסיעה רגילה"
+
+    UpdateRideRequest:
+      type: object
+      properties:
+        task:
+          type: string
+          example: "נסיעה מעודכנת"
+        pickupAddress:
+          type: string
+          example: "תל אביב, רחוב הרצל 1"
+        dropoffAddress:
+          type: string
+          example: "ירושלים, רחוב יפו 10"
+        scheduledDate:
+          type: string
+          format: date
+        scheduledTime:
+          type: string
+        clientId:
+          type: string
+        driverId:
+          type: string
+        estimatedFare:
+          type: number
+        invoiceNumber:
+          type: string
+        notes:
+          type: string
+
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "notification123"
+        title:
+          type: string
+          example: "נסיעה הוקצתה לך"
+        message:
+          type: string
+          example: "נסיעה הוקצתה לך: נסיעה דחופה"
+        type:
+          type: string
+          enum: [RIDE_ASSIGNED, RIDE_ACCEPTED, RIDE_DECLINED, RIDE_COMPLETED, RIDE_CANCELLED, DRIVER_DECLINED, SYSTEM_ALERT]
+          example: "RIDE_ASSIGNED"
+        isRead:
+          type: boolean
+          example: false
+        userId:
+          type: string
+          example: "user123"
+        rideId:
+          type: string
+          example: "ride123"
+        createdAt:
+          type: string
+          format: date-time
+        ride:
+          $ref: '#/components/schemas/Ride'
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: "שגיאה בנתונים"
+        details:
+          type: object
+          description: "פרטים נוספים על השגיאה"
+
+security:
+  - bearerAuth: []
