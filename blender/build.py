@@ -44,7 +44,7 @@ M = dict(
     jeru=mat("jerusalem_stone", (0.80, 0.70, 0.52), 0.75),
     copper=mat("copper_dome", (0.16, 0.10, 0.07), 0.4, 0.8),
     verdigris=mat("verdigris", (0.20, 0.42, 0.36), 0.5, 0.3),
-    marble=mat("marble_white", (0.85, 0.84, 0.80), 0.15),
+    marble=mat("marble_white", (0.85, 0.84, 0.80), 0.3),
     marble_r=mat("marble_siena", (0.55, 0.30, 0.20), 0.2),
     walnut=mat("walnut", (0.22, 0.12, 0.06), 0.4),
     mahog=mat("mahogany", (0.30, 0.09, 0.05), 0.35),
@@ -168,7 +168,7 @@ box("plaza", -60, -75, -1.25, 60, 40, -1.2, M["paving"])
 box("lawn_l", -48, -70, -1.2, -12, -40, -1.15, M["grass"])
 box("lawn_r", 12, -70, -1.2, 48, -40, -1.15, M["grass"])
 box("lawn_c", -8, -70, -1.2, 8, -48, -1.15, M["grass"])
-box("podium", -40, -30, -1.2, 40, 30, 0, M["stone"])
+box("podium", -40, -30, -1.2, 40, 30, -0.08, M["stone"])
 for i in range(6):  # front steps
     box(f"front_step_{i}", -7, -36 + i * 1.0, -1.2, 7, -30 + 0, -1.2 + (i + 1) * 0.2, M["stone"])
 box("road_r", 44, -75, -1.24, 52, 40, -1.2, M["asphalt"])
