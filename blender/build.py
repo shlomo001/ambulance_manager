@@ -70,6 +70,13 @@ M = dict(
     flag_blue=mat("flag_blue", (0.0, 0.15, 0.6), 0.8),
     plant=mat("plant", (0.08, 0.3, 0.08), 0.8),
     lamp_green=mat("lamp_green", (0.02, 0.25, 0.08), 0.15, 0, (0.2, 0.8, 0.3), 1.5),
+    device_light=mat("device_light", (0.78, 0.79, 0.80), 0.35),
+    device_dark=mat("device_dark", (0.10, 0.11, 0.12), 0.4),
+    led_green=mat("led_green", (0.1, 1, 0.3), 0.3, 0, (0.1, 1.0, 0.3), 12),
+    screen_blue=mat("screen_blue", (0.1, 0.4, 1), 0.2, 0, (0.15, 0.5, 1.0), 6),
+    screen_xray=mat("screen_xray", (0.9, 0.5, 0.1), 0.2, 0, (0.95, 0.55, 0.15), 3),
+    rubber=mat("rubber", (0.03, 0.03, 0.03), 0.7),
+    tray_grey=mat("tray_grey", (0.35, 0.37, 0.4), 0.5),
     prop_ph=mat("gta_prop_placeholder", (0.85, 0.18, 0.0), 0.6, 0, (0.9, 0.25, 0.0), 0.6),
 )
 ZONE = dict(
@@ -200,6 +207,7 @@ box("ent_door_recess", -1.8, -27.5, 0, 1.8, -27.2, 5.0, M["stone_dark"])
 box("ent_text_band", -6, -27.45, 6.6, 6, -27.35, 7.4, M["stone_dark"])
 box("ent_emblem", -0.9, -27.5, 5.7, 0.9, -27.4, 6.5, M["gold"])
 box("ent_roof", -9.4, -27.4, H_ENT, 9.4, -16.6, H_ENT + 0.5, M["stone"], C_ROOF)
+box("link_roof", -9.4, -16.6, H_ENT, 9.4, -3.0, H_ENT + 0.3, M["white"], C_ROOF)
 # wings
 for s, nm in ((-1, "left"), (1, "right")):
     xa, xb = sorted((s * 9, s * 26))
@@ -244,13 +252,54 @@ wall("vestibule_screen", -8.6, -24, 8.6, -24, 0, 4.5, M["bronze"], 0.15, doors=[
 zone("vest", -8.6, -26.6, 8.6, -24, 0, "security", "פרוזדור כניסה")
 zone("sec", -8.6, -24, 8.6, -17.6, 0, "security", "אולם בידוק")
 
-def md_shape(x, y, z, a):  # walk-through metal detector stand-in
-    obox("md_l", x - 0.45 * math.cos(a), y - 0.45 * math.sin(a), z, 0.12, 0.6, 2.1, a, M["prop_ph"], C_PROPS)
-    obox("md_r", x + 0.45 * math.cos(a), y + 0.45 * math.sin(a), z, 0.12, 0.6, 2.1, a, M["prop_ph"], C_PROPS)
-    obox("md_t", x, y, z + 2.1, 1.05, 0.6, 0.15, a, M["prop_ph"], C_PROPS)
-def xr_shape(x, y, z, a):  # baggage x-ray scanner stand-in
-    obox("xr_body", x, y, z, 1.0, 2.0, 1.4, a, M["prop_ph"], C_PROPS)
-    obox("xr_belt", x, y, z, 0.8, 3.6, 0.8, a, M["black"], C_PROPS)
+def md_shape(x, y, z, a):
+    """walk-through metal detector, modelled on a CEIA HI-PE-class archway:
+    passage 0.72 x 2.0 m, two slim 0.6 m-deep side panels, top unit with display, LED zone bars."""
+    for sd in (-1, 1):
+        px, py = _loc(x, y, a, sd * 0.405, 0)
+        _bevel(obox("md_panel", px, py, z, 0.09, 0.60, 2.02, a, M["device_light"], C_PROPS), 0.02)
+        for fy in (-0.29, 0.29):  # LED bars on the inner front/back edges
+            lx, ly = _loc(x, y, a, sd * 0.355, fy)
+            obox("md_led", lx, ly, z + 0.25, 0.015, 0.015, 1.6, a, M["led_green"], C_PROPS)
+    _bevel(obox("md_top", x, y, z + 2.02, 0.92, 0.62, 0.20, a, M["device_dark"], C_PROPS), 0.03)
+    dx, dy = _loc(x, y, a, 0, -0.315)
+    obox("md_display", dx, dy, z + 2.07, 0.26, 0.01, 0.09, a, M["screen_blue"], C_PROPS)
+    obox("md_mat", x, y, z, 1.0, 1.7, 0.012, a, M["black"], C_PROPS)
+def xr_shape(x, y, z, a):
+    """baggage X-ray scanner, modelled on a 6040-class unit (Smiths HI-SCAN 6040: 2.34 x 0.85 x 1.37 m,
+    tunnel 0.62 x 0.42 m, belt at ~0.8 m), with roller tables, lead curtains and operator monitor."""
+    L, W, H, BELT, TW, TH = 2.3, 0.86, 1.37, 0.80, 0.62, 0.42
+    _bevel(obox("xr_base", x, y, z, W, L, BELT - 0.02, a, M["device_light"], C_PROPS), 0.03)
+    _bevel(obox("xr_top", x, y, z + BELT + TH, W, L, H - BELT - TH, a, M["device_light"], C_PROPS), 0.04)
+    for sd in (-1, 1):
+        sx, sy = _loc(x, y, a, sd * (TW / 2 + (W - TW) / 4), 0)
+        obox("xr_side", sx, sy, z + BELT - 0.03, (W - TW) / 2, L, TH + 0.06, a, M["device_light"], C_PROPS)
+        sx, sy = _loc(x, y, a, sd * (W / 2 + 0.003), 0)
+        obox("xr_stripe", sx, sy, z + 0.55, 0.006, L - 0.2, 0.06, a, M["flag_blue"], C_PROPS)
+    obox("xr_belt", x, y, z + BELT - 0.03, TW, L + 0.02, 0.03, a, M["black"], C_PROPS)
+    for fy in (-L / 2 - 0.01, L / 2 + 0.01):  # lead curtains
+        for k in range(6):
+            cx, cy = _loc(x, y, a, -TW / 2 + 0.05 + k * (TW - 0.1) / 5, fy)
+            obox("xr_curtain", cx, cy, z + BELT, 0.095, 0.006, TH - 0.02, a, M["rubber"], C_PROPS)
+    for fy in (-L / 2 - 0.5, L / 2 + 0.5):  # roller tables
+        tx, ty = _loc(x, y, a, 0, fy)
+        obox("xr_rollframe", tx, ty, z + BELT - 0.08, TW + 0.1, 1.0, 0.06, a, M["steel"], C_PROPS)
+        for k in range(12):
+            rx, ry = _loc(x, y, a, 0, fy - 0.46 + k * 0.084)
+            obox("xr_roller", rx, ry, z + BELT - 0.03, TW, 0.05, 0.035, a, M["steel"], C_PROPS)
+        for sd in (-1, 1):
+            for e in (-0.45, 0.45):
+                lx, ly = _loc(x, y, a, sd * TW / 2, fy + e)
+                obox("xr_rollleg", lx, ly, z, 0.04, 0.04, BELT - 0.08, a, M["steel"], C_PROPS)
+    ox, oy = _loc(x, y, a, -0.95, 0.2)  # operator console + monitor
+    _bevel(obox("xr_desk", ox, oy, z, 0.6, 0.9, 0.74, a, M["device_dark"], C_PROPS), 0.02)
+    mx, my = _loc(x, y, a, -0.9, 0.2)
+    obox("xr_monitor", mx, my, z + 0.78, 0.05, 0.6, 0.38, a, M["black"], C_PROPS)
+    sx2, sy2 = _loc(x, y, a, -0.87, 0.2)
+    obox("xr_screen", sx2, sy2, z + 0.80, 0.01, 0.55, 0.33, a, M["screen_xray"], C_PROPS)
+    for k in range(4):
+        tx, ty = _loc(x, y, a, 0, -L / 2 - 1.05)
+        _bevel(obox("xr_tray", tx, ty, z + 0.62 + k * 0.07, 0.5, 0.65, 0.06, a, M["tray_grey"], C_PROPS), 0.02)
 def blk(w, d, h, mm=None):
     return lambda x, y, z, a: obox("ph", x, y, z, w, d, h, a, mm or M["prop_ph"], C_PROPS)
 def _bevel(ob, w=0.03):
@@ -307,7 +356,7 @@ def LAMP(x, y, z, a):  # banker's lamp: brass base + green glass shade
 
 for i, x in enumerate((-4.5, 0.0)):
     prop("ch_prop_ch_metal_detector_01a", x, -20.8, 0, 0, md_shape)
-    prop("ch_prop_baggage_scanner_01a", x - 2.0, -21.0, 0, 0, xr_shape)
+    prop("ch_prop_baggage_scanner_01a", x - 1.6, -21.0, 0, 0, xr_shape)
 prop("ch_prop_ch_metal_detector_01a", 4.6, -20.8, 0, 0, md_shape)  # lawyers' fast lane
 label("מסלול עו״ד", 4.6, -22.6)
 prop("v_corp_deskseta", 7.25, -19.55, 0, 90, table_shape(1.9, 2.0, 1.1))
@@ -315,7 +364,13 @@ prop("ch_prop_ch_security_monitor_01a", 7.2, -19.6, 1.15, 180, blk(0.6, 0.2, 0.4
 for k in range(6):
     prop("ch_prop_ch_service_locker_01a", 8.2, -23.6 + k * 0.6, 0, 90, blk(0.5, 0.55, 1.9, M["steel"]))
 for k in range(5):
-    prop("v_corp_bk_rope", -6.5 + k * 2.2, -22.8, 0, 0, blk(0.25, 0.25, 1.0, M["brass"]))
+    def stanchion(x, y, z, a):
+        cyl("st_base", x, y, 0.17, z, z + 0.04, M["brass"], 20, C_PROPS)
+        cyl("st_post", x, y, 0.03, z, z + 0.95, M["brass"], 12, C_PROPS)
+        cyl("st_cap", x, y, 0.05, z + 0.95, z + 1.0, M["brass"], 12, C_PROPS)
+        if x < 2:
+            obox("st_rope", x + 1.1, y, z + 0.80, 2.1, 0.04, 0.05, 0, M["velvet"], C_PROPS)
+    prop("v_corp_bk_rope", -6.5 + k * 2.2, -22.8, 0, 0, stanchion)
 
 # --- rotunda (lobby) ---
 zone("rot", -7.3, -17.3, 7.3, -2.8, 0, "public")
@@ -585,6 +640,8 @@ zone("sb_e", 10.5, 24, 15, 27.6, BZ, "secure", "דלת שירות – משטרה
 for k in range(14):  # stair up to the dock
     box(f"dock_stair_{k}", 7.0 + k * 0.0, 12.4 + k * 0.22, BZ, 9.6, 12.4 + (k + 1) * 0.22, BZ + (k + 1) * (4.5 / 14), M["stone_dark"])
 
+exec(open(os.path.join(HERE, "realism.py"), encoding="utf-8").read())
+
 # ---------- world / lights ----------
 world = bpy.data.worlds.new("World"); scene.world = world; world.use_nodes = True
 nt = world.node_tree; bg = nt.nodes["Background"]
@@ -598,6 +655,9 @@ try:
 except Exception:
     pass
 nt.links.new(sky.outputs[0], bg.inputs[0]); bg.inputs[1].default_value = 0.25
+if os.path.exists(os.path.join(HERE, "assets", "sky.hdr")):
+    env = nt.nodes.new("ShaderNodeTexEnvironment"); env.image = bpy.data.images.load(os.path.join(HERE, "assets", "sky.hdr"))
+    nt.links.new(env.outputs[0], bg.inputs[0]); bg.inputs[1].default_value = 1.0
 sun = bpy.data.lights.new("sun", 'SUN'); sun.energy = 2.2; sun.angle = math.radians(1.5)
 so = bpy.data.objects.new("sun", sun); so.rotation_euler = (math.radians(55), 0, math.radians(200)); scene.collection.objects.link(so)
 def plight(name, x, y, z, w, size=1.0, color=(1, 0.85, 0.65), c=None):
