@@ -251,26 +251,41 @@ def xr_shape(x, y, z, a):  # baggage x-ray scanner stand-in
     obox("xr_belt", x, y, z, 0.8, 3.6, 0.8, a, M["black"], C_PROPS)
 def blk(w, d, h, mm=None):
     return lambda x, y, z, a: obox("ph", x, y, z, w, d, h, a, mm or M["prop_ph"], C_PROPS)
+def chair_shape(mseat, back=1.0):
+    def f(x, y, z, a):
+        obox("chair_seat", x, y, z, 0.55, 0.55, 0.48, a, mseat, C_PROPS)
+        bx, by = x - 0.25 * math.cos(a - math.pi / 2), y - 0.25 * math.sin(a - math.pi / 2)
+        obox("chair_back", bx, by, z + 0.48, 0.55, 0.08, back - 0.48, a, mseat, C_PROPS)
+    return f
+def bench_shape(L=1.8):
+    def f(x, y, z, a):
+        obox("bench_seat", x, y, z, L, 0.45, 0.45, a, M["oak"], C_PROPS)
+        bx, by = x - 0.22 * math.cos(a - math.pi / 2), y - 0.22 * math.sin(a - math.pi / 2)
+        obox("bench_back", bx, by, z + 0.45, L, 0.06, 0.5, a, M["oak"], C_PROPS)
+    return f
+def table_shape(w, d, h=0.76, mm=None):
+    return lambda x, y, z, a: obox("table", x, y, z, w, d, h, a, mm or M["walnut"], C_PROPS)
+LAMP = blk(0.25, 0.3, 0.45, M["brass"])
 
 for i, x in enumerate((-4.5, 0.0)):
     prop("ch_prop_ch_metal_detector_01a", x, -20.8, 0, 0, md_shape)
     prop("ch_prop_baggage_scanner_01a", x - 2.0, -21.0, 0, 0, xr_shape)
 prop("ch_prop_ch_metal_detector_01a", 4.6, -20.8, 0, 0, md_shape)  # lawyers' fast lane
 label("מסלול עו״ד", 4.6, -22.6)
-box("guard_desk", 6.2, -20.5, 0, 8.3, -18.6, 1.1, M["walnut"])
-box("guard_desk_top", 6.1, -20.6, 1.1, 8.4, -18.5, 1.15, M["marble"])
+prop("v_corp_deskseta", 7.25, -19.55, 0, 90, table_shape(1.9, 2.0, 1.1))
 prop("ch_prop_ch_security_monitor_01a", 7.2, -19.6, 1.15, 180, blk(0.6, 0.2, 0.4, M["black"]))
 for k in range(6):
     prop("ch_prop_ch_service_locker_01a", 8.2, -23.6 + k * 0.6, 0, 90, blk(0.5, 0.55, 1.9, M["steel"]))
 for k in range(5):
-    prop("vw_prop_vw_barrier_rope_01a", -6.5 + k * 2.2, -22.8, 0, 0, blk(0.25, 0.25, 1.0, M["brass"]))
+    prop("v_corp_bk_rope", -6.5 + k * 2.2, -22.8, 0, 0, blk(0.25, 0.25, 1.0, M["brass"]))
 
 # --- rotunda (lobby) ---
 zone("rot", -7.3, -17.3, 7.3, -2.8, 0, "public")
 label("רוטונדה – לובי", 0, -13.5)
 cyl("rot_floor_inlay", 0, -10, 2.2, 0, 0.02, M["marble_r"])
 cyl("rot_emblem", 0, -10, 0.9, 0.02, 0.04, M["brass"])
-box("info_desk", -5.4, -13.5, 0, -3.6, -9.5, 1.1, M["walnut"])
+prop("v_corp_desksetb", -4.5, -11.5, 0, 90, table_shape(1.0, 3.2, 1.1))
+prop("v_corp_bk_lfltstand", 4.6, -14.5, 0, 0, blk(0.5, 0.4, 1.5, M["walnut"]))
 label("מודיעין", -4.5, -11.5)
 # imperial (horseshoe) staircase: two curved flights hugging the wall, meeting at a rear landing at z=4.5
 N_ST, RISE = 24, 4.5 / 24
@@ -316,8 +331,14 @@ zone("lw_n1", -26, -8.5, -22, -2, 0, "public", "עדי|הגנה")
 zone("lw_n2", -22, -8.5, -16.5, -2, 0, "public", "עדי|תביעה")
 zone("lw_n3", -16.5, -8.5, -12, -2, 0, "public", "התייעצות|3")
 zone("lw_n4", -12, -8.5, -9, -2, 0, "public", "מחסן")
-for x in (-21, -17):
-    box("consult_table", x - 0.8, -17.5, 0, x + 0.8, -16.5, 0.75, M["walnut"], C_FURN)
+for (x, y) in ((-21, -16.7), (-17, -16.7), (-14.25, -5.2)):
+    prop("m25_1_prop_m51_dinetable_01a", x, y, 0, 0, table_shape(1.6, 1.0))
+    for dx, dy, h in ((-0.4, -0.85, 180), (0.4, -0.85, 180), (-0.4, 0.85, 0), (0.4, 0.85, 0)):
+        prop("m25_1_prop_m51_dinechair_01a", x + dx, y + dy, 0, h, chair_shape(M["walnut"], 0.95))
+    prop("v_corp_bk_lamp2", x + 0.5, y, 0.76, 0, LAMP)
+for (x0, x1) in ((-26, -22), (-22, -16.5)):
+    for y in (-7.6, -2.9):
+        prop("m25_2_prop_m52_l_bench_01", (x0 + x1) / 2, y, 0, 180 if y < -5 else 0, bench_shape(2.2))
 
 # --- right wing: judges (secure) ---
 wall("rw_corr_s", 9, -11.5, 26, -11.5, 0, WZ, M["white"], 0.3, doors=[(2.5, 1.0, 2.2), (7.5, 1.0, 2.2), (13.5, 1.0, 2.2)])
@@ -331,6 +352,10 @@ for x in (15, 20.5):
 box("judges_lock_door", 8.95, -11.4, 0, 9.05, -8.6, 2.6, M["mahog"])
 label("דלת|נעולה", 7.6, -13.2)
 zone("rw_c", 9, -11.5, 26, -8.5, 0, "judges", "מסדרון שופטים")
+for (x, y, h) in ((11.5, -18.5, 0), (16.5, -18.5, 0), (17.75, -4.5, 180), (23.25, -4.5, 180)):
+    prop("h4_prop_office_desk_01", x, y, 0, h, table_shape(1.9, 0.9, 0.78, M["mahog"]))
+    prop("ex_prop_offchair_exec_02", x, y + (-0.9 if h == 0 else 0.9), 0, 180 if h == 0 else 0, chair_shape(M["black"], 1.2))
+    prop("v_corp_bk_flag", x + 1.3, y + (1.2 if h == 0 else -1.2), 0, 0, blk(0.3, 0.3, 2.0, M["flag_white"]))
 zone("rw_s1", 9, -22, 14, -11.5, 0, "judges", "לשכת|שופטים")
 zone("rw_s2", 14, -22, 19, -11.5, 0, "judges", "לשכת|שופטים")
 zone("rw_s3", 19, -22, 26, -11.5, 0, "secure", "חדר|משמר")
@@ -368,22 +393,23 @@ ring("bench_desk", CX, CY, 8.4, 9.0, 0.6, 1.85, M["mahog"], a0=60, a1=120, n=36,
 ring("bench_top", CX, CY, 8.35, 9.05, 1.85, 1.92, M["walnut"], a0=60, a1=120, n=36, c=C_FURN)
 for i, a in enumerate((78, 90, 102)):
     ar = math.radians(a); hb = 1.9 if a == 90 else 1.5
-    obox(f"judge_chair_{i}", CX + 9.8 * math.cos(ar), CY + 9.8 * math.sin(ar), 0.6, 0.75, 0.7, hb, ar, M["leather"], C_FURN)
-    prop("ch_prop_ch_desk_lamp", CX + 8.7 * math.cos(ar + 0.05), CY + 8.7 * math.sin(ar + 0.05), 1.92, a, blk(0.2, 0.3, 0.45, M["brass"]))
+    prop("v_ilev_hd_chair", CX + 9.7 * math.cos(ar), CY + 9.7 * math.sin(ar), 0.6, a - 90, chair_shape(M["leather"], hb))
+    prop("v_corp_bk_lamp2", CX + 8.7 * math.cos(ar + 0.05), CY + 8.7 * math.sin(ar + 0.05), 1.92, a - 90, LAMP)
 box("bench_emblem_front", -0.5, CY + 8.3, 0.9, 0.5, CY + 8.35, 1.6, M["brass"])
 # wall behind bench: drape, emblem, inscription, flag
 ring("drape", CX, CY, 11.6, 11.75, 0.6, 5.5, M["velvet"], a0=72, a1=108, n=24)
 box("emblem", -1.3, CY + 11.5, 6.2, 1.3, CY + 11.65, 8.8, M["gold"])
 box("inscription", -4.5, CY + 11.55, 9.3, 4.5, CY + 11.75, 9.9, M["gold"])
-cyl("court_flagpole", CX + 10.5 * math.cos(math.radians(62)), CY + 10.5 * math.sin(math.radians(62)), 0.04, 0.6, 3.8, M["brass"], 12, C_FURN)
+cyl("court_flagpole", CX + 10.5 * math.cos(math.radians(62)), CY + 10.5 * math.sin(math.radians(62)), 0.04, 0.6, 3.8, M["brass"], 12, C_PROPS)
 fx, fy = CX + 10.5 * math.cos(math.radians(62)), CY + 10.5 * math.sin(math.radians(62))
 box("court_flag", fx - 0.02, fy - 1.0, 2.4, fx + 0.02, fy, 3.6, M["flag_white"], C_FURN)
 box("court_flag_b", fx - 0.03, fy - 1.0, 3.35, fx + 0.03, fy, 3.45, M["flag_blue"], C_FURN)
 box("court_flag_b2", fx - 0.03, fy - 1.0, 2.55, fx + 0.03, fy, 2.65, M["flag_blue"], C_FURN)
-PROPS.append(dict(model="prop_flag_us (custom Israel texture)", x=round(fx, 2), y=round(fy, 2), z=0.6, heading=0))
+PROPS.append(dict(model="v_corp_bk_flag", x=round(fx, 2), y=round(fy, 2), z=0.6, heading=0, note="indoor flag on stand; Israeli flag = new texture"))
 label("כס שופטים", 0, CY + 8.0)
 # clerk desk
-ring("clerk_desk", CX, CY, 6.6, 7.2, 0.0, 1.0, M["walnut"], a0=80, a1=100, n=12, c=C_FURN)
+prop("v_corp_deskseta", CX, CY + 6.9, 0, 0, table_shape(2.4, 0.9, 1.0))
+prop("v_club_officechair", CX, CY + 7.7, 0, 0, chair_shape(M["black"], 1.0))
 label("מזכירת אולם", 0, CY + 5.6)
 # witness stand (angled, raised 0.3)
 wa = math.radians(138); wx, wy = CX + 8.0 * math.cos(wa), CY + 8.0 * math.sin(wa)
@@ -399,10 +425,10 @@ obox("dock_glass", dx, dy, 1.0, 3.0, 1.8, 1.4, da + math.pi / 2, M["glass"], C_F
 label("ספסל הנאשמים", dx - 1.2, dy - 1.8)
 # counsel tables + lectern
 for sx, t in ((-1, "הגנה"), (1, "תביעה")):
-    box(f"counsel_{t}", sx * 3.4 - 1.5, CY - 1.0, 0, sx * 3.4 + 1.5, CY + 0.1, 0.76, M["walnut"], C_FURN)
+    prop("v_ret_fh_dinetable", sx * 3.4, CY - 0.45, 0, 0, table_shape(2.6, 1.1))
     for k in range(3):
-        obox(f"counsel_chair_{t}_{k}", sx * 3.4 - 1.0 + k, CY - 1.6, 0, 0.55, 0.55, 1.0, 0, M["leather"], C_FURN)
-    prop("ch_prop_ch_desk_lamp", sx * 3.4, CY - 0.4, 0.76, 0, blk(0.2, 0.3, 0.45, M["brass"]))
+        prop("v_corp_cd_recseat", sx * 3.4 - 0.9 + k * 0.9, CY - 1.4, 0, 180, chair_shape(M["leather"], 1.0))
+    prop("v_corp_bk_lamp2", sx * 3.4 + 0.8, CY - 0.2, 0.76, 0, LAMP)
     label(f"שולחן {t}", sx * 3.4, CY - 2.5)
 prop("xm_prop_x17_lectern_01", 0, CY + 1.6, 0, 180, blk(0.7, 0.55, 1.2, M["walnut"]))
 # bar rail with central gate gap
@@ -410,16 +436,21 @@ box("bar_rail_l", -9.0, CY - 3.6, 0, -0.9, CY - 3.45, 1.0, M["walnut"], C_FURN)
 box("bar_rail_r", 0.9, CY - 3.6, 0, 9.0, CY - 3.45, 1.0, M["walnut"], C_FURN)
 box("bar_gate", -0.9, CY - 3.58, 0.1, 0.9, CY - 3.47, 0.95, M["brass"], C_FURN)
 # public pews in arcs (south half), central aisle
+def bench_arc(r, a0, a1, z, L=1.8):
+    arc = math.radians(a1 - a0) * r; n = max(1, int(arc // (L + 0.15)))
+    for k in range(n):
+        a = math.radians(a0 + (a1 - a0) * (k + 0.5) / n)
+        prop("m25_2_prop_m52_c_bench_01", CX + r * math.cos(a), CY + r * math.sin(a), z, round(math.degrees(a) + 90, 1), bench_shape(L))
 for row, r in enumerate((5.6, 6.7, 7.8, 8.9, 10.0)):
     for (a0, a1) in ((206, 263), (277, 334)):
-        ring(f"pew_{row}_{a0}", CX, CY, r - 0.25, r + 0.25, 0, 0.45, M["oak"], a0, a1, n=18, c=C_FURN)
-        ring(f"pewback_{row}_{a0}", CX, CY, r + 0.25, r + 0.35, 0, 1.0, M["oak"], a0, a1, n=18, c=C_FURN)
+        bench_arc(r, a0, a1, 0)
 label("ספסלי קהל", 0, CY - 7.6)
 # gallery balcony at z=4.5 (south half)
 ring("gallery_slab", CX, CY, 9.6, 12.0, 4.3, 4.5, M["walnut"], 200, 340, n=40)
 ring("gallery_rail", CX, CY, 9.55, 9.7, 4.5, 5.5, M["bronze"], 200, 340, n=40)
 for row, r in enumerate((10.3, 11.2)):
-    ring(f"gal_pew_{row}", CX, CY, r - 0.2, r + 0.2, 4.5, 4.95, M["oak"], 205, 335, n=30, c=C_FURN)
+    for (a0, a1) in ((205, 266), (274, 335)):
+        bench_arc(r, a0, a1, 4.5)
 # chandeliers + interior lights
 prop("m24_1_prop_m41_chandelier_01a", CX, CY, 14.0, 0, lambda x, y, z, a: cyl("chand_main", x, y, 2.0, z - 1.8, z, M["light"], 32, C_PROPS))
 for k in range(4):
@@ -450,8 +481,12 @@ for k in range(ST * 2):
 CUR[0] = C_UP
 ring("bar_upper_floor", BX, BY, 3.1, 5.6, 4.85, 5.0, M["marble"], n=48)
 zone("bar_cere", BX - 5.5, BY + 3.1, BX + 5.5, BY + 5.5, 5.0, "bar", "אולם השבעה", plan="u")
-for row in range(4):
-    ring(f"cere_chairs_{row}", BX, BY, 3.4 + row * 0.55, 3.8 + row * 0.55, 5.0, 5.45, M["leather"], 200, 340, n=16, c=C_FURN)
+for row in range(3):
+    r = 3.6 + row * 0.7
+    for k in range(7):
+        a = math.radians(205 + k * 21.5)
+        prop("v_corp_cd_recseat", BX + r * math.cos(a), BY + r * math.sin(a), 5.0, round(math.degrees(a) + 90, 1), chair_shape(M["leather"], 1.0))
+prop("xm_prop_x17_lectern_01", BX, BY + 4.6, 5.0, 180, blk(0.7, 0.55, 1.2, M["walnut"]))
 CUR[0] = C_G
 # judges (right dome)
 JX, JY = 31.5, -12
@@ -462,7 +497,10 @@ cyl("j_elev", JX + 3.4, JY - 2.4, 0.9, 0, 5.0, M["bronze"], 16)
 CUR[0] = C_UP
 ring("j_upper_floor", JX, JY, 0, 5.6, 4.85, 5.0, M["walnut"], n=48)
 zone("j_lib", JX - 4, JY - 4, JX + 4, JY + 4, 5.0, "judges", "ספרייה וחדר ישיבות", plan="u")
-cyl("j_round_table", JX, JY, 1.6, 5.0, 5.78, M["walnut"], 32, C_FURN)
+prop("v_corp_conftable", JX, JY, 5.0, 0, table_shape(3.6, 1.6, 0.78))
+for k in range(6):
+    xx = JX - 1.2 + (k % 3) * 1.2; yy = JY + (-1.2 if k < 3 else 1.2)
+    prop("v_corp_cd_recseat", xx, yy, 5.0, 180 if k < 3 else 0, chair_shape(M["leather"], 1.0))
 label("גלריית הקהל", 0, -1.0, 4.6, plan="u")
 zone("gal", -8, -2.5, 8, 0.5, 4.5, "court", None, plan="u")
 
@@ -488,6 +526,18 @@ zone("bb_n1", -26, -8.5, -20.5, -2, BZ, "bar", "ספרייה ומועדון", pl
 zone("bb_n2", -20.5, -8.5, -15, -2, BZ, "bar", "משרדים|1-2", plan="b")
 zone("bb_n3", -15, -8.5, -9, -2, BZ, "bar", "משרד 3", plan="b")
 zone("bb_spiral", BX - 4, BY - 4, BX + 4, BY + 4, BZ, "bar", "ספירלה ומעלית", plan="b")
+for i in range(12):  # exam room
+    x = -23.2 + (i % 3) * 1.6; y = -20.8 + (i // 3) * 2.2
+    prop("sf_prop_sf_table_office_01a", x, y, BZ, 0, table_shape(1.1, 0.6, 0.75, M["oak"]))
+    prop("v_res_study_chair", x, y - 0.6, BZ, 180, chair_shape(M["walnut"], 0.95))
+prop("prop_hotel_clock_01", -21.5, -11.8, BZ + 2.4, 180, blk(0.5, 0.1, 0.5, M["black"]))
+prop("v_corp_conftable", -11.5, -16.5, BZ, 90, table_shape(1.6, 3.6, 0.78))  # ethics committee
+for k in range(6):
+    prop("v_corp_cd_recseat", -11.5 + (-1.2 if k < 3 else 1.2), -17.7 + (k % 3) * 1.2, BZ, 90 if k < 3 else -90, chair_shape(M["leather"], 1.0))
+prop("h4_prop_office_desk_01", -16.5, -19.5, BZ, 0, table_shape(1.9, 0.9, 0.78, M["mahog"]))  # head of the bar
+prop("ex_prop_offchair_exec_02", -16.5, -20.4, BZ, 180, chair_shape(M["black"], 1.2))
+for (x, y) in ((-24.5, -6.5), (-22.0, -6.5), (-24.5, -3.5), (-22.0, -3.5)):  # library lounge
+    prop("bkr_prop_clubhouse_armchair_01a", x, y, BZ, 0, chair_shape(M["leather"], 0.9))
 # secure basement: service door (rear right) -> stair -> corridor -> stairs up into the dock
 wall("sb_w1", 10.5, 9, 10.5, 26, BZ, BZ + BH, M["white"], 0.3)
 wall("sb_w2", 13.0, 12, 13.0, 26, BZ, BZ + BH, M["white"], 0.3)

@@ -31,6 +31,11 @@ VIEWS = {
     "rotunda":     ((0, -16.8, 1.8), (0, -4, 4.0), 14, False, dict(zone_floors=False), None),
     "bar":         ((-31.5 + 4.6, -12 - 3.0, 1.6), (-31.5, -12, 3.5), 14, False, dict(zone_floors=False), None),
 }
+if view.startswith("plan") or view == "aerial":  # every existing GTA prop painted orange in plan views
+    ph = bpy.data.materials["gta_prop_placeholder"]
+    for ob in C["gta_props"].objects:
+        if ob.type == 'MESH':
+            ob.data.materials.clear(); ob.data.materials.append(ph)
 loc, tgt, lens, ortho, cols, lplan = VIEWS[view]
 show(**cols)
 cam_d = bpy.data.cameras.new("cam"); cam = bpy.data.objects.new("cam", cam_d); sc.collection.objects.link(cam)
