@@ -155,35 +155,35 @@
   "heading": 0
  },
  {
-  "model": "m25_1_prop_m51_dinetable_01a",
+  "model": "v_ilev_liconftable_sml",
   "x": -21,
   "y": -16.7,
   "z": 0,
   "heading": 0
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -21.4,
   "y": -17.55,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -20.6,
   "y": -17.55,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -21.4,
   "y": -15.85,
   "z": 0,
   "heading": 0
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -20.6,
   "y": -15.85,
   "z": 0,
@@ -197,35 +197,35 @@
   "heading": 0
  },
  {
-  "model": "m25_1_prop_m51_dinetable_01a",
+  "model": "v_ilev_liconftable_sml",
   "x": -17,
   "y": -16.7,
   "z": 0,
   "heading": 0
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -17.4,
   "y": -17.55,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -16.6,
   "y": -17.55,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -17.4,
   "y": -15.85,
   "z": 0,
   "heading": 0
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -16.6,
   "y": -15.85,
   "z": 0,
@@ -239,35 +239,35 @@
   "heading": 0
  },
  {
-  "model": "m25_1_prop_m51_dinetable_01a",
+  "model": "v_ilev_liconftable_sml",
   "x": -14.25,
   "y": -5.2,
   "z": 0,
   "heading": 0
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -14.65,
   "y": -6.05,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -13.85,
   "y": -6.05,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -14.65,
   "y": -4.35,
   "z": 0,
   "heading": 0
  },
  {
-  "model": "m25_1_prop_m51_dinechair_01a",
+  "model": "vw_prop_vw_offchair_03",
   "x": -13.85,
   "y": -4.35,
   "z": 0,
@@ -281,28 +281,28 @@
   "heading": 0
  },
  {
-  "model": "m25_2_prop_m52_l_bench_01",
+  "model": "hei_heist_stn_sofa3seat_01",
   "x": -24.0,
   "y": -7.6,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "m25_2_prop_m52_l_bench_01",
+  "model": "hei_heist_stn_sofa3seat_01",
   "x": -24.0,
   "y": -2.9,
   "z": 0,
   "heading": 0
  },
  {
-  "model": "m25_2_prop_m52_l_bench_01",
+  "model": "hei_heist_stn_sofa3seat_01",
   "x": -19.25,
   "y": -7.6,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "m25_2_prop_m52_l_bench_01",
+  "model": "hei_heist_stn_sofa3seat_01",
   "x": -19.25,
   "y": -2.9,
   "z": 0,
@@ -316,7 +316,7 @@
   "heading": 0
  },
  {
-  "model": "ex_prop_offchair_exec_02",
+  "model": "vw_prop_vw_offchair_02",
   "x": 11.5,
   "y": -19.4,
   "z": 0,
@@ -337,7 +337,7 @@
   "heading": 0
  },
  {
-  "model": "ex_prop_offchair_exec_02",
+  "model": "vw_prop_vw_offchair_02",
   "x": 16.5,
   "y": -19.4,
   "z": 0,
@@ -358,7 +358,7 @@
   "heading": 180
  },
  {
-  "model": "ex_prop_offchair_exec_02",
+  "model": "vw_prop_vw_offchair_02",
   "x": 17.75,
   "y": -3.6,
   "z": 0,
@@ -379,7 +379,7 @@
   "heading": 180
  },
  {
-  "model": "ex_prop_offchair_exec_02",
+  "model": "vw_prop_vw_offchair_02",
   "x": 23.25,
   "y": -3.6,
   "z": 0,
@@ -393,7 +393,7 @@
   "heading": 0
  },
  {
-  "model": "v_ilev_hd_chair",
+  "model": "vw_prop_vw_offchair_02",
   "x": 2.017,
   "y": 18.488,
   "z": 0.6,
@@ -407,7 +407,7 @@
   "heading": -12
  },
  {
-  "model": "v_ilev_hd_chair",
+  "model": "vw_prop_vw_offchair_02",
   "x": 0.0,
   "y": 18.7,
   "z": 0.6,
@@ -421,7 +421,7 @@
   "heading": 0
  },
  {
-  "model": "v_ilev_hd_chair",
+  "model": "vw_prop_vw_offchair_02",
   "x": -2.017,
   "y": 18.488,
   "z": 0.6,
@@ -450,7 +450,7 @@
   "heading": 0
  },
  {
-  "model": "v_club_officechair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": 0,
   "y": 16.7,
   "z": 0,
@@ -464,28 +464,28 @@
   "heading": 138
  },
  {
-  "model": "v_ret_fh_dinetable",
+  "model": "m24_2_prop_m42_conftable_01a",
   "x": -3.4,
   "y": 8.55,
   "z": 0,
   "heading": 0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -4.3,
   "y": 7.6,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -3.4,
   "y": 7.6,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -2.5,
   "y": 7.6,
   "z": 0,
@@ -499,28 +499,28 @@
   "heading": 0
  },
  {
-  "model": "v_ret_fh_dinetable",
+  "model": "m24_2_prop_m42_conftable_01a",
   "x": 3.4,
   "y": 8.55,
   "z": 0,
   "heading": 0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": 2.5,
   "y": 7.6,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": 3.4,
   "y": 7.6,
   "z": 0,
   "heading": 180
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": 4.3,
   "y": 7.6,
   "z": 0,
@@ -541,392 +541,392 @@
   "heading": 180
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -4.274,
   "y": 5.382,
   "z": 0,
   "heading": 310.2
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -2.03,
   "y": 3.781,
   "z": 0,
   "heading": 338.8
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 2.03,
   "y": 3.781,
   "z": 0,
   "heading": 381.2
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 4.274,
   "y": 5.382,
   "z": 0,
   "heading": 409.8
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -5.455,
   "y": 5.109,
   "z": 0,
   "heading": 305.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -3.891,
   "y": 3.545,
   "z": 0,
   "heading": 324.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -1.903,
   "y": 2.576,
   "z": 0,
   "heading": 343.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 1.903,
   "y": 2.576,
   "z": 0,
   "heading": 376.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 3.891,
   "y": 3.545,
   "z": 0,
   "heading": 395.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 5.455,
   "y": 5.109,
   "z": 0,
   "heading": 414.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -6.35,
   "y": 4.471,
   "z": 0,
   "heading": 305.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -4.529,
   "y": 2.65,
   "z": 0,
   "heading": 324.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -2.215,
   "y": 1.521,
   "z": 0,
   "heading": 343.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 2.215,
   "y": 1.521,
   "z": 0,
   "heading": 376.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 4.529,
   "y": 2.65,
   "z": 0,
   "heading": 395.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 6.35,
   "y": 4.471,
   "z": 0,
   "heading": 414.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -7.454,
   "y": 4.136,
   "z": 0,
   "heading": 303.1
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -6.027,
   "y": 2.451,
   "z": 0,
   "heading": 317.4
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -4.23,
   "y": 1.169,
   "z": 0,
   "heading": 331.6
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -2.172,
   "y": 0.369,
   "z": 0,
   "heading": 345.9
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 2.172,
   "y": 0.369,
   "z": 0,
   "heading": 374.1
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 4.23,
   "y": 1.169,
   "z": 0,
   "heading": 388.4
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 6.027,
   "y": 2.451,
   "z": 0,
   "heading": 402.6
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 7.454,
   "y": 4.136,
   "z": 0,
   "heading": 416.9
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -8.508,
   "y": 3.745,
   "z": 0,
   "heading": 301.7
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -7.302,
   "y": 2.167,
   "z": 0,
   "heading": 313.1
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -5.807,
   "y": 0.859,
   "z": 0,
   "heading": 324.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -4.083,
   "y": -0.128,
   "z": 0,
   "heading": 335.9
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -2.198,
   "y": -0.755,
   "z": 0,
   "heading": 347.3
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 2.198,
   "y": -0.755,
   "z": 0,
   "heading": 372.7
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 4.083,
   "y": -0.128,
   "z": 0,
   "heading": 384.1
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 5.807,
   "y": 0.859,
   "z": 0,
   "heading": 395.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 7.302,
   "y": 2.167,
   "z": 0,
   "heading": 406.9
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 8.508,
   "y": 3.745,
   "z": 0,
   "heading": 418.3
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -8.82,
   "y": 3.68,
   "z": 4.5,
   "heading": 301.1
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -7.496,
   "y": 1.936,
   "z": 4.5,
   "heading": 313.3
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -5.834,
   "y": 0.512,
   "z": 4.5,
   "heading": 325.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -3.908,
   "y": -0.53,
   "z": 4.5,
   "heading": 337.7
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -1.806,
   "y": -1.14,
   "z": 4.5,
   "heading": 349.9
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 1.806,
   "y": -1.14,
   "z": 4.5,
   "heading": 370.1
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 3.908,
   "y": -0.53,
   "z": 4.5,
   "heading": 382.3
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 5.834,
   "y": 0.512,
   "z": 4.5,
   "heading": 394.5
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 7.496,
   "y": 1.936,
   "z": 4.5,
   "heading": 406.7
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 8.82,
   "y": 3.68,
   "z": 4.5,
   "heading": 418.9
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -9.691,
   "y": 3.386,
   "z": 4.5,
   "heading": 300.1
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -8.548,
   "y": 1.763,
   "z": 4.5,
   "heading": 310.2
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -7.137,
   "y": 0.368,
   "z": 4.5,
   "heading": 320.4
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -5.501,
   "y": -0.756,
   "z": 4.5,
   "heading": 330.6
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -3.693,
   "y": -1.574,
   "z": 4.5,
   "heading": 340.8
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": -1.768,
   "y": -2.06,
   "z": 4.5,
   "heading": 350.9
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 1.768,
   "y": -2.06,
   "z": 4.5,
   "heading": 369.1
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 3.693,
   "y": -1.574,
   "z": 4.5,
   "heading": 379.2
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 5.501,
   "y": -0.756,
   "z": 4.5,
   "heading": 389.4
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 7.137,
   "y": 0.368,
   "z": 4.5,
   "heading": 399.6
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 8.548,
   "y": 1.763,
   "z": 4.5,
   "heading": 409.8
  },
  {
-  "model": "m25_2_prop_m52_c_bench_01",
+  "model": "prop_fib_3b_bench",
   "x": 9.691,
   "y": 3.386,
   "z": 4.5,
@@ -968,147 +968,147 @@
   "heading": 0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -34.763,
   "y": -13.521,
   "z": 5.0,
   "heading": 295.0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -33.978,
   "y": -14.611,
   "z": 5.0,
   "heading": 316.5
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -32.849,
   "y": -15.338,
   "z": 5.0,
   "heading": 338.0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -31.531,
   "y": -15.6,
   "z": 5.0,
   "heading": 359.5
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -30.21,
   "y": -15.361,
   "z": 5.0,
   "heading": 381.0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -29.068,
   "y": -14.654,
   "z": 5.0,
   "heading": 402.5
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -28.264,
   "y": -13.578,
   "z": 5.0,
   "heading": 424.0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -35.397,
   "y": -13.817,
   "z": 5.0,
   "heading": 295.0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -34.46,
   "y": -15.119,
   "z": 5.0,
   "heading": 316.5
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -33.111,
   "y": -15.987,
   "z": 5.0,
   "heading": 338.0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -31.538,
   "y": -16.3,
   "z": 5.0,
   "heading": 359.5
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -29.959,
   "y": -16.014,
   "z": 5.0,
   "heading": 381.0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -28.595,
   "y": -15.17,
   "z": 5.0,
   "heading": 402.5
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -27.635,
   "y": -13.885,
   "z": 5.0,
   "heading": 424.0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -36.032,
   "y": -14.113,
   "z": 5.0,
   "heading": 295.0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -34.942,
   "y": -15.627,
   "z": 5.0,
   "heading": 316.5
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -33.373,
   "y": -16.636,
   "z": 5.0,
   "heading": 338.0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -31.544,
   "y": -17.0,
   "z": 5.0,
   "heading": 359.5
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -29.708,
   "y": -16.668,
   "z": 5.0,
   "heading": 381.0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -28.122,
   "y": -15.686,
   "z": 5.0,
   "heading": 402.5
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -27.006,
   "y": -14.192,
   "z": 5.0,
@@ -1129,42 +1129,42 @@
   "heading": 0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": 30.3,
   "y": -13.2,
   "z": 5.0,
   "heading": 180
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": 31.5,
   "y": -13.2,
   "z": 5.0,
   "heading": 180
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": 32.7,
   "y": -13.2,
   "z": 5.0,
   "heading": 180
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": 30.3,
   "y": -10.8,
   "z": 5.0,
   "heading": 0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": 31.5,
   "y": -10.8,
   "z": 5.0,
   "heading": 0
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": 32.7,
   "y": -10.8,
   "z": 5.0,
@@ -1178,7 +1178,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -23.2,
   "y": -21.4,
   "z": -4.5,
@@ -1192,7 +1192,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -21.6,
   "y": -21.4,
   "z": -4.5,
@@ -1206,7 +1206,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -20.0,
   "y": -21.4,
   "z": -4.5,
@@ -1220,7 +1220,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -23.2,
   "y": -19.2,
   "z": -4.5,
@@ -1234,7 +1234,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -21.6,
   "y": -19.2,
   "z": -4.5,
@@ -1248,7 +1248,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -20.0,
   "y": -19.2,
   "z": -4.5,
@@ -1262,7 +1262,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -23.2,
   "y": -17.0,
   "z": -4.5,
@@ -1276,7 +1276,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -21.6,
   "y": -17.0,
   "z": -4.5,
@@ -1290,7 +1290,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -20.0,
   "y": -17.0,
   "z": -4.5,
@@ -1304,7 +1304,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -23.2,
   "y": -14.8,
   "z": -4.5,
@@ -1318,7 +1318,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -21.6,
   "y": -14.8,
   "z": -4.5,
@@ -1332,7 +1332,7 @@
   "heading": 0
  },
  {
-  "model": "v_res_study_chair",
+  "model": "gr_prop_gr_offchair_01a",
   "x": -20.0,
   "y": -14.8,
   "z": -4.5,
@@ -1353,42 +1353,42 @@
   "heading": 90
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -12.7,
   "y": -17.7,
   "z": -4.5,
   "heading": 90
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -12.7,
   "y": -16.5,
   "z": -4.5,
   "heading": 90
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -12.7,
   "y": -15.3,
   "z": -4.5,
   "heading": 90
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -10.3,
   "y": -17.7,
   "z": -4.5,
   "heading": -90
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -10.3,
   "y": -16.5,
   "z": -4.5,
   "heading": -90
  },
  {
-  "model": "v_corp_cd_recseat",
+  "model": "vw_prop_vw_offchair_01",
   "x": -10.3,
   "y": -15.3,
   "z": -4.5,
@@ -1402,35 +1402,35 @@
   "heading": 0
  },
  {
-  "model": "ex_prop_offchair_exec_02",
+  "model": "vw_prop_vw_offchair_02",
   "x": -16.5,
   "y": -20.4,
   "z": -4.5,
   "heading": 180
  },
  {
-  "model": "bkr_prop_clubhouse_armchair_01a",
+  "model": "v_corp_lazychair",
   "x": -24.5,
   "y": -6.5,
   "z": -4.5,
   "heading": 0
  },
  {
-  "model": "bkr_prop_clubhouse_armchair_01a",
+  "model": "v_corp_lazychair",
   "x": -22.0,
   "y": -6.5,
   "z": -4.5,
   "heading": 0
  },
  {
-  "model": "bkr_prop_clubhouse_armchair_01a",
+  "model": "v_corp_lazychair",
   "x": -24.5,
   "y": -3.5,
   "z": -4.5,
   "heading": 0
  },
  {
-  "model": "bkr_prop_clubhouse_armchair_01a",
+  "model": "v_corp_lazychair",
   "x": -22.0,
   "y": -3.5,
   "z": -4.5,
