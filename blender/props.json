@@ -1,0 +1,227 @@
+[
+ {
+  "model": "prop_flagpole_2a",
+  "x": -14,
+  "y": -45,
+  "z": -1.2,
+  "heading": 0,
+  "note": "3 flagpoles, Israeli flag = custom texture"
+ },
+ {
+  "model": "ch_prop_ch_metal_detector_01a",
+  "x": -4.5,
+  "y": -20.8,
+  "z": 0,
+  "heading": 0
+ },
+ {
+  "model": "ch_prop_baggage_scanner_01a",
+  "x": -6.5,
+  "y": -21.0,
+  "z": 0,
+  "heading": 0
+ },
+ {
+  "model": "ch_prop_ch_metal_detector_01a",
+  "x": 0.0,
+  "y": -20.8,
+  "z": 0,
+  "heading": 0
+ },
+ {
+  "model": "ch_prop_baggage_scanner_01a",
+  "x": -2.0,
+  "y": -21.0,
+  "z": 0,
+  "heading": 0
+ },
+ {
+  "model": "ch_prop_ch_metal_detector_01a",
+  "x": 4.6,
+  "y": -20.8,
+  "z": 0,
+  "heading": 0
+ },
+ {
+  "model": "ch_prop_ch_security_monitor_01a",
+  "x": 7.2,
+  "y": -19.6,
+  "z": 1.15,
+  "heading": 180
+ },
+ {
+  "model": "ch_prop_ch_service_locker_01a",
+  "x": 8.2,
+  "y": -23.6,
+  "z": 0,
+  "heading": 90
+ },
+ {
+  "model": "ch_prop_ch_service_locker_01a",
+  "x": 8.2,
+  "y": -23.0,
+  "z": 0,
+  "heading": 90
+ },
+ {
+  "model": "ch_prop_ch_service_locker_01a",
+  "x": 8.2,
+  "y": -22.4,
+  "z": 0,
+  "heading": 90
+ },
+ {
+  "model": "ch_prop_ch_service_locker_01a",
+  "x": 8.2,
+  "y": -21.8,
+  "z": 0,
+  "heading": 90
+ },
+ {
+  "model": "ch_prop_ch_service_locker_01a",
+  "x": 8.2,
+  "y": -21.2,
+  "z": 0,
+  "heading": 90
+ },
+ {
+  "model": "ch_prop_ch_service_locker_01a",
+  "x": 8.2,
+  "y": -20.6,
+  "z": 0,
+  "heading": 90
+ },
+ {
+  "model": "vw_prop_vw_barrier_rope_01a",
+  "x": -6.5,
+  "y": -22.8,
+  "z": 0,
+  "heading": 0
+ },
+ {
+  "model": "vw_prop_vw_barrier_rope_01a",
+  "x": -4.3,
+  "y": -22.8,
+  "z": 0,
+  "heading": 0
+ },
+ {
+  "model": "vw_prop_vw_barrier_rope_01a",
+  "x": -2.1,
+  "y": -22.8,
+  "z": 0,
+  "heading": 0
+ },
+ {
+  "model": "vw_prop_vw_barrier_rope_01a",
+  "x": 0.1,
+  "y": -22.8,
+  "z": 0,
+  "heading": 0
+ },
+ {
+  "model": "vw_prop_vw_barrier_rope_01a",
+  "x": 2.3,
+  "y": -22.8,
+  "z": 0,
+  "heading": 0
+ },
+ {
+  "model": "m24_1_prop_m41_chandelier_01a",
+  "x": 0,
+  "y": -10,
+  "z": 9.0,
+  "heading": 0
+ },
+ {
+  "model": "ch_prop_ch_desk_lamp",
+  "x": 1.381,
+  "y": 17.59,
+  "z": 1.92,
+  "heading": 78
+ },
+ {
+  "model": "ch_prop_ch_desk_lamp",
+  "x": -0.435,
+  "y": 17.689,
+  "z": 1.92,
+  "heading": 90
+ },
+ {
+  "model": "ch_prop_ch_desk_lamp",
+  "x": -2.232,
+  "y": 17.409,
+  "z": 1.92,
+  "heading": 102
+ },
+ {
+  "model": "prop_flag_us (custom Israel texture)",
+  "x": 4.93,
+  "y": 18.27,
+  "z": 0.6,
+  "heading": 0
+ },
+ {
+  "model": "prop_table_mic_01",
+  "x": -5.499,
+  "y": 13.952,
+  "z": 1.41,
+  "heading": 138
+ },
+ {
+  "model": "ch_prop_ch_desk_lamp",
+  "x": -3.4,
+  "y": 8.6,
+  "z": 0.76,
+  "heading": 0
+ },
+ {
+  "model": "ch_prop_ch_desk_lamp",
+  "x": 3.4,
+  "y": 8.6,
+  "z": 0.76,
+  "heading": 0
+ },
+ {
+  "model": "xm_prop_x17_lectern_01",
+  "x": 0,
+  "y": 10.6,
+  "z": 0,
+  "heading": 180
+ },
+ {
+  "model": "m24_1_prop_m41_chandelier_01a",
+  "x": 0,
+  "y": 9,
+  "z": 14.0,
+  "heading": 0
+ },
+ {
+  "model": "m24_1_prop_m41_chandelier_01a",
+  "x": 4.596,
+  "y": 13.596,
+  "z": 10.0,
+  "heading": 0
+ },
+ {
+  "model": "m24_1_prop_m41_chandelier_01a",
+  "x": -4.596,
+  "y": 13.596,
+  "z": 10.0,
+  "heading": 0
+ },
+ {
+  "model": "m24_1_prop_m41_chandelier_01a",
+  "x": -4.596,
+  "y": 4.404,
+  "z": 10.0,
+  "heading": 0
+ },
+ {
+  "model": "m24_1_prop_m41_chandelier_01a",
+  "x": 4.596,
+  "y": 4.404,
+  "z": 10.0,
+  "heading": 0
+ }
+]

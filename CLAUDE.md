@@ -9,3 +9,19 @@
 - אין בבניין משטרה, מעצר או תאים. עצור עולה מהמרתף ישר לספסל הנאשמים.
 - שלטים בעברית בלבד. סמלים ישראליים, בלי פסלי צדק ובלי מאזניים.
 - לכל חדר יש דלת למסדרון.
+
+## כללי עבודה שהמשתמש קבע
+- לפני שבונים משהו, מחפשים ברשת איך הוא אמור להיראות, ובונים לפי זה.
+- לפני שבונים מודל ב-Blender, בודקים אם יש פריט מתאים במשחק, ומשתמשים בו. הרשימה בסעיף 8א של התוכנית.
+- אחרי כל שלב בונים תמונות וסרטון, כדי שהמשתמש יוכל לראות מה נבנה.
+
+## איך מריצים
+```bash
+pip install bpy                          # Blender 5.x כמודול פייתון
+cd blender
+python build.py                          # בונה את courthouse.blend, props.json ו-labels.json
+python render.py VIEW [אחוז] [דגימות]     # front aerial plan0 plan1 planB court court_bench security rotunda bar
+python labels.py plan0 "כותרת"           # שמות חדרים בעברית על הרנדר
+python video.py 60 12                    # פריימים ל-renders/frames, ואז ffmpeg יוצר renders/walkthrough.mp4
+```
+- הפריטים הכתומים ברנדרים הם ממלאי מקום לפריטים שקיימים במשחק. השמות והמיקומים שלהם נמצאים ב-`blender/props.json`.
