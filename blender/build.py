@@ -68,7 +68,7 @@ M = dict(
     flag_white=mat("flag_white", (0.95, 0.95, 0.95), 0.8),
     flag_blue=mat("flag_blue", (0.0, 0.15, 0.6), 0.8),
     plant=mat("plant", (0.08, 0.3, 0.08), 0.8),
-    prop_ph=mat("gta_prop_placeholder", (0.9, 0.45, 0.05), 0.6),
+    prop_ph=mat("gta_prop_placeholder", (0.85, 0.18, 0.0), 0.6, 0, (0.9, 0.25, 0.0), 0.6),
 )
 ZONE = dict(
     public=mat("z_public", (0.95, 0.85, 0.55), 0.9),

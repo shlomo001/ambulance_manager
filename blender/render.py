@@ -27,7 +27,7 @@ VIEWS = {
     "planB":       ((-11, 3, 80), (-11, 3, -5), 70, True, dict(roofs=False, upper_floor=False, ground_floor=False, furniture=False, gta_props=False, exterior=False, site=False), "b"),
     "court":       ((0, -1.5, 6.4), (0, 16, 2.4), 18, False, dict(zone_floors=False), None),
     "court_bench": ((-6.5, 2.5, 1.7), (2.5, 16, 1.6), 20, False, dict(zone_floors=False), None),
-    "security":    ((0, -26.2, 3.0), (-1.5, -17, 1.2), 16, False, dict(zone_floors=False), None),
+    "security":    ((7.0, -23.4, 2.4), (-3.5, -18.5, 0.9), 15, False, dict(zone_floors=False), None),
     "rotunda":     ((0, -16.8, 1.8), (0, -4, 4.0), 14, False, dict(zone_floors=False), None),
     "bar":         ((-31.5 + 4.6, -12 - 3.0, 1.6), (-31.5, -12, 3.5), 14, False, dict(zone_floors=False), None),
 }
