@@ -1,5 +1,5 @@
-# Courthouse & Bar Association (FiveM)
+# היכל המשפט (FiveM MLO)
 
-הפיכת מצפה הכוכבים Galileo Observatory בשרת FiveM לבית משפט ולשכת עורכי דין.
+בית משפט ולשכת עורכי דין במבנה אחד, בסגנון היכל קלאסי מפואר ועם סמלים ישראליים.
 
 התוכנית המלאה נמצאת ב-[docs/PLAN.md](docs/PLAN.md).
